@@ -1,0 +1,23 @@
+# DOCKER-VERSION 0.5.3
+# VERSION        0.1
+
+FROM ubuntu
+
+MAINTAINER Justin Plock <jplock@gmail.com>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get -y -q install wget logrotate
+
+RUN wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+RUN apt-key add rabbitmq-signing-key-public.asc
+RUN echo "deb http://www.rabbitmq.com/debian/ testing main" > /etc/apt/sources.list.d/rabbitmq.list
+RUN apt-get update
+RUN apt-get -y -q install rabbitmq-server || true
+RUN /usr/sbin/rabbitmq-plugins enable rabbitmq_management
+
+EXPOSE 5672 15672
+
+CMD ["/usr/sbin/rabbitmq-server"]
