@@ -1,15 +1,16 @@
 # DOCKER-VERSION 0.5.3
-# VERSION        0.1
+# VERSION        0.2
 
 FROM ubuntu
-
 MAINTAINER Justin Plock <jplock@gmail.com>
-
-ENV DEBIAN_FRONTEND noninteractive
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get -y -q install wget logrotate
+
+# Hack for initctl not being available in Ubuntu
+RUN dpkg-divert --local --rename --add /sbin/initctl
+RUN ln -s /bin/true /sbin/initctl
 
 RUN wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
 RUN apt-key add rabbitmq-signing-key-public.asc
