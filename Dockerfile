@@ -1,4 +1,4 @@
-# DOCKER-VERSION 0.5.3
+# DOCKER-VERSION 0.6.1
 # VERSION        0.2
 
 FROM ubuntu
@@ -21,4 +21,4 @@ RUN /usr/sbin/rabbitmq-plugins enable rabbitmq_management
 
 EXPOSE 5672 15672
 
-CMD ["/usr/sbin/rabbitmq-server"]
+ENTRYPOINT ["/usr/sbin/rabbitmq-server"]
