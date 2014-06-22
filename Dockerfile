@@ -1,5 +1,5 @@
-# DOCKER-VERSION 0.9.0
-# VERSION        0.4
+# DOCKER-VERSION 1.0.1
+# VERSION        0.5
 
 FROM debian:jessie
 MAINTAINER Justin Plock <justin@plock.net>
@@ -14,6 +14,7 @@ RUN echo "deb http://www.rabbitmq.com/debian/ testing main" > /etc/apt/sources.l
 RUN apt-get update
 RUN apt-get -y -q install rabbitmq-server
 RUN /usr/sbin/rabbitmq-plugins enable rabbitmq_management
+RUN echo "[{rabbit, [{loopback_users, []}]}]." > /etc/rabbitmq/rabbitmq.config
 
 EXPOSE 5672 15672
 
